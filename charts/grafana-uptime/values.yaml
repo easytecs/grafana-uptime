@@ -5,6 +5,8 @@ image:
   pullPolicy: IfNotPresent
   tag: prod-239f319
 
+listServicesToCheck: []
+
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
