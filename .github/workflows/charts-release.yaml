@@ -37,3 +37,17 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.TOKEN }}
+
+      - name: Package the Helm chart
+        run: helm package charts/grafana-uptime -d ./packages
+
+      - name: Publish the Helm chart
+        run: |
+          mkdir -p ./gh-pages
+          helm repo index ./packages --url https://easytecs.github.io/grafana-uptime
+          cp -R ./packages/* ./gh-pages/
+          git config user.name "$GITHUB_ACTOR"
+          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+          git add ./gh-pages/.
+          git commit -m "Publish Helm chart"
+          git push origin master
