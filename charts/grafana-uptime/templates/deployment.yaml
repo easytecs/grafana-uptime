@@ -46,9 +46,9 @@ spec:
             {{- toYaml .Values.resources | nindent 12 }}
           
           volumeMounts:
-            - name: payload-json
-              mountPath: /app/.data/payload.json
-              subPath: payload.json
+            - name: payload-yaml
+              mountPath: /app/.data/payload.yaml
+              subPath: payload.yaml
 
       {{- with .Values.nodeSelector }}
       nodeSelector:
@@ -63,6 +63,6 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       volumes:
-      - name: payload-json
+      - name: payload-yaml
         configMap:
           name: grafana-uptime-data
