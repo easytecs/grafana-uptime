@@ -19,7 +19,7 @@ jobs:
           username: ${{ secrets.docker_user }}
           password: ${{ secrets.doker_secrets }}
 
-      - run: docker build . --file Dockerfile --tag easytecs/grafana-uptime:latest
+      - run: docker build . --file Dockerfile --tag easytecs/grafana-uptime:prod-${GITHUB_SHA::7}
         shell: bash
-      - run: docker push easytecs/grafana-uptime:latest
+      - run: docker push easytecs/grafana-uptime:prod-${GITHUB_SHA::7}
         shell: bash
