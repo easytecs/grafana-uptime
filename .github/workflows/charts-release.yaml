@@ -41,35 +41,3 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-
-
-      - name: Push charts to GHCR
-        run: |
-          ls -la
-          echo "------------------"
-          ls -la charts
-          shopt -s nullglob
-          for pkg in .cr-release-packages/*; do
-            if [ -z "${pkg:-}" ]; then
-              break
-            fi
-            echo "HELM PUSH"
-            helm push "${pkg}" "oci://ghcr.io/${GITHUB_REPOSITORY_OWNER}/charts"
-          done
-
-      # - name: Build dependency chart repos
-      #   run: helm dependency build charts/grafana-uptime
-
-      # - name: Package the Helm chart
-      #   run: helm package charts/grafana-uptime -d ./packages
-
-      # - name: Publish the Helm chart
-      #   run: |
-      #     mkdir -p ./gh-pages
-      #     helm repo index ./packages --url https://easytecs.github.io/grafana-uptime
-      #     cp -R ./packages/* ./gh-pages/
-      #     git config user.name "$GITHUB_ACTOR"
-      #     git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
-      #     git add ./gh-pages/.
-      #     git commit -m "Publish Helm chart"
-      #     git push origin master
