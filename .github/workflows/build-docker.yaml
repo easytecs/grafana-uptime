@@ -1,0 +1,25 @@
+name: CI/CD para TravelTauaMembershipAPI
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+          
+  deploy-docker:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do repositório
+        uses: actions/checkout@v4
+
+      - name: Login to  Docker Container Registry
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.docker_user }}
+          password: ${{ secrets.doker_secrets }}
+
+      - run: docker build . --file Dockerfile --tag easytecs/grafana-uptime:latest
+        shell: bash
+      - run: docker push easytecs/grafana-uptime:latest
+        shell: bash
