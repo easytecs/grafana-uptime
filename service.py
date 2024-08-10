@@ -2,11 +2,12 @@ from prometheus_client import start_http_server, Gauge, Counter, generate_latest
 import requests
 import time
 import json
+import yaml
 
 def get_payload():
-    file_path = '/app/.data/payload.json'
+    file_path = '/app/.data/payload.yaml'
     with open(file_path, 'r') as file:
-        return file.read()
+        return yaml.safe_load(file)
 
 c = Gauge('uptime_requests_response_time', 'HTTP Request', [
     'service_name',
@@ -17,7 +18,7 @@ c = Gauge('uptime_requests_response_time', 'HTTP Request', [
 
 def process_request():
     
-    data = json.loads(get_payload())
+    data = get_payload()
     for item in data:
         url = item["url"]
         payload = item["body"]

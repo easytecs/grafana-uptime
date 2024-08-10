@@ -1,5 +1,5 @@
 FROM python:alpine
-RUN pip install prometheus_client requests
+RUN pip install prometheus_client requests pyyaml
 
 WORKDIR /app
 

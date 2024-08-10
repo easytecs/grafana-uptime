@@ -3,4 +3,5 @@ kind: ConfigMap
 metadata:
   name: grafana-uptime-data
 data:
-  payload.json: {{- toJson .Values.listServicesToCheck | nindent 12 }}
+  payload.yaml: |
+    {{- toYaml .Values.listServicesToCheck | nindent 12 }}
