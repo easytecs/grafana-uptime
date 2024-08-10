@@ -1,8 +1,11 @@
 from prometheus_client import start_http_server, Gauge, Counter, generate_latest
+from dotenv import load_dotenv
 import requests
 import time
-import json
 import yaml
+import os
+
+load_dotenv()
 
 def get_payload():
     file_path = '/app/.data/payload.yaml'
@@ -39,7 +42,7 @@ def process_request():
 
         c.labels(item['service_name'], item['method'], url, status).set(response.elapsed.total_seconds())
     
-    time.sleep(15)
+    time.sleep(os.getenv("SLEEP_TIME_SECOND", 15))
 
 
 if __name__ == "__main__":

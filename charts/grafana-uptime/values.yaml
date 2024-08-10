@@ -6,6 +6,7 @@ image:
   tag: prod-29943b4
 
 listServicesToCheck: []
+sleepTimeSecond: 15
 
 imagePullSecrets: []
 nameOverride: ""
