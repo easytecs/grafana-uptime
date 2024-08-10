@@ -12,4 +12,4 @@ kind: ConfigMap
 metadata:
   name: grafana-uptime-params
 data:
-  SLEEP_TIME_SECOND: {{ .Values.sleepTimeSecond }}
+  SLEEP_TIME_SECOND: "{{ .Values.sleepTimeSecond }}"
