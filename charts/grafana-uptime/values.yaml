@@ -3,7 +3,7 @@ replicaCount: 1
 image:
   repository: easytecs/grafana-uptime
   pullPolicy: IfNotPresent
-  tag: latest
+  tag: prod-239f319
 
 imagePullSecrets: []
 nameOverride: ""
