@@ -44,6 +44,12 @@ spec:
           #     port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          
+          volumeMounts:
+            - name: payload-json
+              mountPath: /app/.data/payload.json
+              subPath: payload.json
+
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -56,3 +62,7 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      volumes:
+      - name: payload-json
+        configMap:
+          name: grafana-uptime-data

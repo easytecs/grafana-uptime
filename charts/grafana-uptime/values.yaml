@@ -51,4 +51,4 @@ prometheus:
       scrape_configs:
         - job_name: 'grana-uptime'
           static_configs:
-            - targets: ['grafana-uptime:8000']
+            - targets: ['grafana-uptime-svc:8000']

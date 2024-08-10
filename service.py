@@ -4,7 +4,7 @@ import time
 import json
 
 def get_payload():
-    file_path = '/app/.data/json_payload.yaml'
+    file_path = '/app/.data/payload.json'
     with open(file_path, 'r') as file:
         return file.read()
 

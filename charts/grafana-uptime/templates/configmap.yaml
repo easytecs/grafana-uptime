@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: grafana-uptime-data
+data:
+  payload.json: | 
+    []
