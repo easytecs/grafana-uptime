@@ -1,7 +1,7 @@
-from prometheus_client import start_http_server, Gauge, Counter, generate_latest
+from prometheus_client import start_http_server, Gauge
 from dotenv import load_dotenv
 import requests
-import time
+import datetime, time
 import yaml
 import os
 
@@ -23,12 +23,15 @@ def process_request():
     
     data = get_payload()
     for item in data:
+        t_start = datetime.datetime.now()
+
         url = item["url"]
         payload = item["body"]
 
         headers = item["headers"] 
     
         try:
+
             if item['method'] == "POST":
                 response = requests.post(url, data=payload, headers=headers)
             elif item['method'] == "PUT":
@@ -37,10 +40,15 @@ def process_request():
                 response = requests.get(url, data=payload, headers=headers)
 
             status = f"{response.status_code}"
+            total_seconds = response.elapsed.total_seconds()
+
         except requests.exceptions.RequestException as e:
+            t_end = datetime.datetime.now()
+            duration = t_end - t_start
+            total_seconds = round(duration.total_seconds())
             status = f"500"
 
-        c.labels(item['service_name'], item['method'], url, status).set(response.elapsed.total_seconds())
+        c.labels(item['service_name'], item['method'], url, status).set(total_seconds)
     
     time.sleep(os.getenv("SLEEP_TIME_SECOND", 15))
 
