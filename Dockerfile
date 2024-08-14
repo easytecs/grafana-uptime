@@ -9,4 +9,4 @@ COPY . .
 
 EXPOSE 8000
 
-CMD ["python", "service.py"]
+CMD ["python", "-u", "service.py"]
