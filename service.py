@@ -31,7 +31,6 @@ def process_request():
         headers = item["headers"] 
     
         try:
-
             if item['method'] == "POST":
                 response = requests.post(url, data=payload, headers=headers)
             elif item['method'] == "PUT":
@@ -48,15 +47,16 @@ def process_request():
             duration = t_end - t_start
             total_seconds = round(duration.total_seconds())
             status = f"500"
+            print(f"ERROR => SLEEP_TIME_SECOND: {os.getenv("SLEEP_TIME_SECOND", 15)}, SERVICE_NAME: {item['service_name']}, METHOD: {item['method']}, STATUS: {500}")
+
 
         c.labels(item['service_name'], item['method'], url, status).set(total_seconds)
     
     time.sleep(os.getenv("SLEEP_TIME_SECOND", 15))
 
-
 if __name__ == "__main__":
     start_http_server(8000)
-
+    print("START SERVICE PORT 8000")
     while True:
         process_request()
         time.sleep(1) 
