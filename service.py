@@ -39,7 +39,7 @@ def process_request():
             else: 
                 response = requests.get(url, data=payload, headers=headers)
 
-            print(f"SUCCESS => SERVICE_NAME: {item['service_name']}, METHOD: {item['method']}, RESPONSE: {response.text()} ,STATUS: {response.status_code}")
+            print(f"SUCCESS => SLEEP_TIME_SECOND: {os.getenv("SLEEP_TIME_SECOND", 15)}, SERVICE_NAME: {item['service_name']}, METHOD: {item['method']}, STATUS: {response.status_code}")
             status = f"{response.status_code}"
             total_seconds = response.elapsed.total_seconds()
 
