@@ -23,6 +23,8 @@ def process_request():
     
     data = get_payload()
     for item in data:
+        SLEEP_TIME_SECOND = int(os.getenv("SLEEP_TIME_SECOND", "15"))
+
         t_start = datetime.datetime.now()
 
         url = item["url"]
@@ -38,7 +40,7 @@ def process_request():
             else: 
                 response = requests.get(url, data=payload, headers=headers)
 
-            print(f"SUCCESS => SLEEP_TIME_SECOND: {os.getenv("SLEEP_TIME_SECOND", 15)}, SERVICE_NAME: {item['service_name']}, METHOD: {item['method']}, STATUS: {response.status_code}")
+            print(f"SUCCESS => SLEEP_TIME_SECOND: {SLEEP_TIME_SECOND}, SERVICE_NAME: {item['service_name']}, METHOD: {item['method']}, STATUS: {response.status_code}")
             status = f"{response.status_code}"
             total_seconds = response.elapsed.total_seconds()
 
@@ -47,12 +49,12 @@ def process_request():
             duration = t_end - t_start
             total_seconds = round(duration.total_seconds())
             status = f"500"
-            print(f"ERROR => SLEEP_TIME_SECOND: {os.getenv("SLEEP_TIME_SECOND", 15)}, SERVICE_NAME: {item['service_name']}, METHOD: {item['method']}, STATUS: {500}")
+            print(f"ERROR => SLEEP_TIME_SECOND: {SLEEP_TIME_SECOND}, SERVICE_NAME: {item['service_name']}, METHOD: {item['method']}, STATUS: {500}")
 
 
         c.labels(item['service_name'], item['method'], url, status).set(total_seconds)
     
-    time.sleep(os.getenv("SLEEP_TIME_SECOND", 15))
+    time.sleep(SLEEP_TIME_SECOND)
 
 if __name__ == "__main__":
     start_http_server(8000)
