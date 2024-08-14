@@ -20,10 +20,10 @@ c = Gauge('uptime_requests_response_time', 'HTTP Request', [
 ])
 
 def process_request():
+    SLEEP_TIME_SECOND = int(os.getenv("SLEEP_TIME_SECOND", "15"))
     
     data = get_payload()
     for item in data:
-        SLEEP_TIME_SECOND = int(os.getenv("SLEEP_TIME_SECOND", "15"))
 
         t_start = datetime.datetime.now()
 
